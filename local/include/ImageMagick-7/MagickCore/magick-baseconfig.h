@@ -37,7 +37,7 @@
 
 /* Directory where architecture-dependent configuration files live. */
 #ifndef MAGICKCORE_CONFIGURE_PATH
-#define MAGICKCORE_CONFIGURE_PATH "/home/fab2/Dev/dvda-author/local/etc/ImageMagick-7/"
+#define MAGICKCORE_CONFIGURE_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/etc/ImageMagick-7/"
 #endif
 
 /* Subdirectory of lib where architecture-dependent configuration files live.
@@ -51,7 +51,7 @@
 
 /* Directory where ImageMagick documents live. */
 #ifndef MAGICKCORE_DOCUMENTATION_PATH
-#define MAGICKCORE_DOCUMENTATION_PATH "/home/fab2/Dev/dvda-author/local/share/doc/ImageMagick-7/"
+#define MAGICKCORE_DOCUMENTATION_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/share/doc/ImageMagick-7/"
 #endif
 
 /* Define if you have Display Postscript */
@@ -62,7 +62,7 @@
 
 /* Directory where executables are installed. */
 #ifndef MAGICKCORE_EXECUTABLE_PATH
-#define MAGICKCORE_EXECUTABLE_PATH "/home/fab2/Dev/dvda-author/local/bin/"
+#define MAGICKCORE_EXECUTABLE_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/bin/"
 #endif
 
 /* Define if you have FFTW library */
@@ -95,9 +95,7 @@
 /* #undef GS_DELEGATE */
 
 /* Define if you have GVC library */
-#ifndef MAGICKCORE_GVC_DELEGATE
-#define MAGICKCORE_GVC_DELEGATE 1
-#endif
+/* #undef GVC_DELEGATE */
 
 /* Define to 1 if you have the `acosh' function. */
 #ifndef MAGICKCORE_HAVE_ACOSH
@@ -133,7 +131,9 @@
 #endif
 
 /* define if bool is a built-in type */
-/* #undef HAVE_BOOL */
+#ifndef MAGICKCORE_HAVE_BOOL
+#define MAGICKCORE_HAVE_BOOL /**/
+#endif
 
 /* Define to 1 if you have the `cabs' function. */
 #ifndef MAGICKCORE_HAVE_CABS
@@ -290,9 +290,7 @@
 #endif
 
 /* Define to 1 if you have the `ftime' function. */
-#ifndef MAGICKCORE_HAVE_FTIME
-#define MAGICKCORE_HAVE_FTIME 1
-#endif
+/* #undef HAVE_FTIME */
 
 /* Define to 1 if you have the `ftruncate' function. */
 #ifndef MAGICKCORE_HAVE_FTRUNCATE
@@ -397,9 +395,7 @@
 #endif
 
 /* Define to 1 if you have the <linux/unistd.h> header file. */
-#ifndef MAGICKCORE_HAVE_LINUX_UNISTD_H
-#define MAGICKCORE_HAVE_LINUX_UNISTD_H 1
-#endif
+/* #undef HAVE_LINUX_UNISTD_H */
 
 /* Define to 1 if you have the `lltostr' function. */
 /* #undef HAVE_LLTOSTR */
@@ -410,7 +406,9 @@
 #endif
 
 /* Define to 1 if the system has the type `locale_t'. */
-/* #undef HAVE_LOCALE_T */
+#ifndef MAGICKCORE_HAVE_LOCALE_T
+#define MAGICKCORE_HAVE_LOCALE_T 1
+#endif
 
 /* Define to 1 if you have the `localtime_r' function. */
 #ifndef MAGICKCORE_HAVE_LOCALTIME_R
@@ -439,7 +437,9 @@
 #endif
 
 /* Define to 1 if you have the <machine/param.h> header file. */
-/* #undef HAVE_MACHINE_PARAM_H */
+#ifndef MAGICKCORE_HAVE_MACHINE_PARAM_H
+#define MAGICKCORE_HAVE_MACHINE_PARAM_H 1
+#endif
 
 /* Define to 1 if you have the <mach-o/dyld.h> header file. */
 /* #undef HAVE_MACH_O_DYLD_H */
@@ -480,10 +480,14 @@
 #endif
 
 /* define if the compiler implements namespaces */
-/* #undef HAVE_NAMESPACES */
+#ifndef MAGICKCORE_HAVE_NAMESPACES
+#define MAGICKCORE_HAVE_NAMESPACES /**/
+#endif
 
 /* Define if g++ supports namespace std. */
-/* #undef HAVE_NAMESPACE_STD */
+#ifndef MAGICKCORE_HAVE_NAMESPACE_STD
+#define MAGICKCORE_HAVE_NAMESPACE_STD /**/
+#endif
 
 /* Define to 1 if you have the `nanosleep' function. */
 #ifndef MAGICKCORE_HAVE_NANOSLEEP
@@ -686,7 +690,9 @@
 #endif
 
 /* define if the compiler supports ISO C++ standard library */
-/* #undef HAVE_STD_LIBS */
+#ifndef MAGICKCORE_HAVE_STD_LIBS
+#define MAGICKCORE_HAVE_STD_LIBS /**/
+#endif
 
 /* Define to 1 if you have the `strcasecmp' function. */
 #ifndef MAGICKCORE_HAVE_STRCASECMP
@@ -734,10 +740,14 @@
 #endif
 
 /* Define to 1 if you have the `strlcat' function. */
-/* #undef HAVE_STRLCAT */
+#ifndef MAGICKCORE_HAVE_STRLCAT
+#define MAGICKCORE_HAVE_STRLCAT 1
+#endif
 
 /* Define to 1 if you have the `strlcpy' function. */
-/* #undef HAVE_STRLCPY */
+#ifndef MAGICKCORE_HAVE_STRLCPY
+#define MAGICKCORE_HAVE_STRLCPY 1
+#endif
 
 /* Define to 1 if you have the `strncasecmp' function. */
 #ifndef MAGICKCORE_HAVE_STRNCASECMP
@@ -836,9 +846,7 @@
 #endif
 
 /* Define to 1 if you have the <sys/sendfile.h> header file. */
-#ifndef MAGICKCORE_HAVE_SYS_SENDFILE_H
-#define MAGICKCORE_HAVE_SYS_SENDFILE_H 1
-#endif
+/* #undef HAVE_SYS_SENDFILE_H */
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #ifndef MAGICKCORE_HAVE_SYS_SOCKET_H
@@ -851,7 +859,9 @@
 #endif
 
 /* Define to 1 if you have the <sys/syslimits.h> header file. */
-/* #undef HAVE_SYS_SYSLIMITS_H */
+#ifndef MAGICKCORE_HAVE_SYS_SYSLIMITS_H
+#define MAGICKCORE_HAVE_SYS_SYSLIMITS_H 1
+#endif
 
 /* Define to 1 if you have the <sys/timeb.h> header file. */
 #ifndef MAGICKCORE_HAVE_SYS_TIMEB_H
@@ -889,31 +899,49 @@
 #endif
 
 /* Define to 1 if you have the <tiffconf.h> header file. */
-/* #undef HAVE_TIFFCONF_H */
+#ifndef MAGICKCORE_HAVE_TIFFCONF_H
+#define MAGICKCORE_HAVE_TIFFCONF_H 1
+#endif
 
 /* Define to 1 if you have the `TIFFIsBigEndian' function. */
-/* #undef HAVE_TIFFISBIGENDIAN */
+#ifndef MAGICKCORE_HAVE_TIFFISBIGENDIAN
+#define MAGICKCORE_HAVE_TIFFISBIGENDIAN 1
+#endif
 
 /* Define to 1 if you have the `TIFFIsCODECConfigured' function. */
-/* #undef HAVE_TIFFISCODECCONFIGURED */
+#ifndef MAGICKCORE_HAVE_TIFFISCODECCONFIGURED
+#define MAGICKCORE_HAVE_TIFFISCODECCONFIGURED 1
+#endif
 
 /* Define to 1 if you have the `TIFFMergeFieldInfo' function. */
-/* #undef HAVE_TIFFMERGEFIELDINFO */
+#ifndef MAGICKCORE_HAVE_TIFFMERGEFIELDINFO
+#define MAGICKCORE_HAVE_TIFFMERGEFIELDINFO 1
+#endif
 
 /* Define to 1 if you have the `TIFFReadEXIFDirectory' function. */
-/* #undef HAVE_TIFFREADEXIFDIRECTORY */
+#ifndef MAGICKCORE_HAVE_TIFFREADEXIFDIRECTORY
+#define MAGICKCORE_HAVE_TIFFREADEXIFDIRECTORY 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetErrorHandlerExt' function. */
-/* #undef HAVE_TIFFSETERRORHANDLEREXT */
+#ifndef MAGICKCORE_HAVE_TIFFSETERRORHANDLEREXT
+#define MAGICKCORE_HAVE_TIFFSETERRORHANDLEREXT 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetTagExtender' function. */
-/* #undef HAVE_TIFFSETTAGEXTENDER */
+#ifndef MAGICKCORE_HAVE_TIFFSETTAGEXTENDER
+#define MAGICKCORE_HAVE_TIFFSETTAGEXTENDER 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetWarningHandlerExt' function. */
-/* #undef HAVE_TIFFSETWARNINGHANDLEREXT */
+#ifndef MAGICKCORE_HAVE_TIFFSETWARNINGHANDLEREXT
+#define MAGICKCORE_HAVE_TIFFSETWARNINGHANDLEREXT 1
+#endif
 
 /* Define to 1 if you have the `TIFFSwabArrayOfTriples' function. */
-/* #undef HAVE_TIFFSWABARRAYOFTRIPLES */
+#ifndef MAGICKCORE_HAVE_TIFFSWABARRAYOFTRIPLES
+#define MAGICKCORE_HAVE_TIFFSWABARRAYOFTRIPLES 1
+#endif
 
 /* Define to 1 if you have the `times' function. */
 #ifndef MAGICKCORE_HAVE_TIMES
@@ -987,7 +1015,9 @@
 #endif
 
 /* Define to 1 if you have the `vfprintf_l' function. */
-/* #undef HAVE_VFPRINTF_L */
+#ifndef MAGICKCORE_HAVE_VFPRINTF_L
+#define MAGICKCORE_HAVE_VFPRINTF_L 1
+#endif
 
 /* Define to 1 if you have the `vprintf' function. */
 #ifndef MAGICKCORE_HAVE_VPRINTF
@@ -1000,7 +1030,9 @@
 #endif
 
 /* Define to 1 if you have the `vsnprintf_l' function. */
-/* #undef HAVE_VSNPRINTF_L */
+#ifndef MAGICKCORE_HAVE_VSNPRINTF_L
+#define MAGICKCORE_HAVE_VSNPRINTF_L 1
+#endif
 
 /* Define to 1 if you have the `vsprintf' function. */
 #ifndef MAGICKCORE_HAVE_VSPRINTF
@@ -1031,7 +1063,9 @@
 #endif
 
 /* Define to 1 if you have the <xlocale.h> header file. */
-/* #undef HAVE_XLOCALE_H */
+#ifndef MAGICKCORE_HAVE_XLOCALE_H
+#define MAGICKCORE_HAVE_XLOCALE_H 1
+#endif
 
 /* Define to 1 if you have the `_aligned_malloc' function. */
 /* #undef HAVE__ALIGNED_MALLOC */
@@ -1082,12 +1116,12 @@
 
 /* Directory where ImageMagick architecture headers live. */
 #ifndef MAGICKCORE_INCLUDEARCH_PATH
-#define MAGICKCORE_INCLUDEARCH_PATH "/home/fab2/Dev/dvda-author/local/include/ImageMagick-7/"
+#define MAGICKCORE_INCLUDEARCH_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/include/ImageMagick-7/"
 #endif
 
 /* Directory where ImageMagick headers live. */
 #ifndef MAGICKCORE_INCLUDE_PATH
-#define MAGICKCORE_INCLUDE_PATH "/home/fab2/Dev/dvda-author/local/include/ImageMagick-7/"
+#define MAGICKCORE_INCLUDE_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/include/ImageMagick-7/"
 #endif
 
 /* ImageMagick is formally installed under prefix */
@@ -1096,7 +1130,9 @@
 #endif
 
 /* Define if you have JBIG library */
-/* #undef JBIG_DELEGATE */
+#ifndef MAGICKCORE_JBIG_DELEGATE
+#define MAGICKCORE_JBIG_DELEGATE 1
+#endif
 
 /* Define if you have JPEG library */
 #ifndef MAGICKCORE_JPEG_DELEGATE
@@ -1115,7 +1151,7 @@
 
 /* Directory where architecture-dependent files live. */
 #ifndef MAGICKCORE_LIBRARY_PATH
-#define MAGICKCORE_LIBRARY_PATH "/home/fab2/Dev/dvda-author/local/lib/ImageMagick-7.0.8/"
+#define MAGICKCORE_LIBRARY_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/lib/ImageMagick-7.0.8/"
 #endif
 
 /* Subdirectory of lib where ImageMagick architecture dependent files are
@@ -1131,7 +1167,9 @@
 #endif
 
 /* Define if you have LQR library */
-/* #undef LQR_DELEGATE */
+#ifndef MAGICKCORE_LQR_DELEGATE
+#define MAGICKCORE_LQR_DELEGATE 1
+#endif
 
 /* Define if using libltdl to support dynamically loadable modules and OpenCL
    */
@@ -1146,7 +1184,9 @@
 #endif
 
 /* Define if you have LZMA library */
-/* #undef LZMA_DELEGATE */
+#ifndef MAGICKCORE_LZMA_DELEGATE
+#define MAGICKCORE_LZMA_DELEGATE 1
+#endif
 
 /* Define to prepend to default font search path. */
 /* #undef MAGICK_FONT_PATH */
@@ -1158,12 +1198,12 @@
 
 /* Target Host OS */
 #ifndef MAGICKCORE_MAGICK_TARGET_OS
-#define MAGICKCORE_MAGICK_TARGET_OS linux-gnu
+#define MAGICKCORE_MAGICK_TARGET_OS freebsd12.0
 #endif
 
 /* Target Host Vendor */
 #ifndef MAGICKCORE_MAGICK_TARGET_VENDOR
-#define MAGICKCORE_MAGICK_TARGET_VENDOR pc
+#define MAGICKCORE_MAGICK_TARGET_VENDOR unknown
 #endif
 
 /* Module directory name without ABI part. */
@@ -1184,7 +1224,9 @@
 /* #undef NDEBUG */
 
 /* Define if you have OPENEXR library */
-/* #undef OPENEXR_DELEGATE */
+#ifndef MAGICKCORE_OPENEXR_DELEGATE
+#define MAGICKCORE_OPENEXR_DELEGATE 1
+#endif
 
 /* Name of package */
 #ifndef MAGICKCORE_PACKAGE
@@ -1222,10 +1264,14 @@
 #endif
 
 /* Define if you have PANGOCAIRO library */
-/* #undef PANGOCAIRO_DELEGATE */
+#ifndef MAGICKCORE_PANGOCAIRO_DELEGATE
+#define MAGICKCORE_PANGOCAIRO_DELEGATE 1
+#endif
 
 /* Define if you have PANGO library */
-/* #undef PANGO_DELEGATE */
+#ifndef MAGICKCORE_PANGO_DELEGATE
+#define MAGICKCORE_PANGO_DELEGATE 1
+#endif
 
 /* enable pipes (|) in filenames */
 /* #undef PIPES_SUPPORT */
@@ -1251,7 +1297,9 @@
 /* #undef RAQM_DELEGATE */
 
 /* Define if you have LIBRAW library */
-/* #undef RAW_R_DELEGATE */
+#ifndef MAGICKCORE_RAW_R_DELEGATE
+#define MAGICKCORE_RAW_R_DELEGATE 1
+#endif
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #ifndef MAGICKCORE_RETSIGTYPE
@@ -1286,7 +1334,7 @@
 
 /* Directory where architecture-independent configuration files live. */
 #ifndef MAGICKCORE_SHARE_PATH
-#define MAGICKCORE_SHARE_PATH "/home/fab2/Dev/dvda-author/local/share/ImageMagick-7/"
+#define MAGICKCORE_SHARE_PATH "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/share/ImageMagick-7/"
 #endif
 
 /* Subdirectory of lib where architecture-independent configuration files
@@ -1389,9 +1437,7 @@
 #endif
 
 /* Define to 1 if strerror_r returns char *. */
-#ifndef MAGICKCORE_STRERROR_R_CHAR_P
-#define MAGICKCORE_STRERROR_R_CHAR_P 1
-#endif
+/* #undef STRERROR_R_CHAR_P */
 
 /* Define if you have POSIX threads libraries and header files. */
 #ifndef MAGICKCORE_THREAD_SUPPORT
@@ -1399,7 +1445,9 @@
 #endif
 
 /* Define if you have TIFF library */
-/* #undef TIFF_DELEGATE */
+#ifndef MAGICKCORE_TIFF_DELEGATE
+#define MAGICKCORE_TIFF_DELEGATE 1
+#endif
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #ifndef MAGICKCORE_TIME_WITH_SYS_TIME
@@ -1480,7 +1528,9 @@
 #endif
 
 /* Define if you have XML library */
-/* #undef XML_DELEGATE */
+#ifndef MAGICKCORE_XML_DELEGATE
+#define MAGICKCORE_XML_DELEGATE 1
+#endif
 
 /* Define to 1 if the X Window System is missing or not being used. */
 /* #undef X_DISPLAY_MISSING */

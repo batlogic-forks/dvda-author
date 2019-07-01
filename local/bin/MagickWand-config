@@ -4,7 +4,7 @@
 # required to use the MagickWand library.
 #
 
-prefix=/home/fab2/Dev/dvda-author/local
+prefix=/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0
 exec_prefix=${prefix}
 
 usage="\
@@ -38,19 +38,19 @@ while test $# -gt 0; do
       echo '7.0.8 Q16 HDRI'
       ;;
     --cflags)
-      /usr/bin/pkg-config --cflags MagickWand
+      /usr/local/bin/pkg-config --cflags MagickWand
       ;;
     --cxxflags)
-      /usr/bin/pkg-config --cflags MagickWand
+      /usr/local/bin/pkg-config --cflags MagickWand
       ;;
     --cppflags)
-      /usr/bin/pkg-config --cflags MagickWand
+      /usr/local/bin/pkg-config --cflags MagickWand
       ;;
     --ldflags)
-      /usr/bin/pkg-config --libs MagickWand
+      /usr/local/bin/pkg-config --libs MagickWand
       ;;
     --libs)
-      /usr/bin/pkg-config --libs MagickWand
+      /usr/local/bin/pkg-config --libs MagickWand
       ;;
     *)
       echo "${usage}" 1>&2

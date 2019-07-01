@@ -4,7 +4,7 @@
 # required to use the MagickCore library.
 #
 
-prefix=/home/fab2/Dev/dvda-author/local
+prefix=/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0
 exec_prefix=${prefix}
 
 usage="\
@@ -38,25 +38,25 @@ while test $# -gt 0; do
       echo '7.0.8 Q16 HDRI'
       ;;
     --cflags)
-      /usr/bin/pkg-config --cflags MagickCore
+      /usr/local/bin/pkg-config --cflags MagickCore
       ;;
     --cxxflags)
-      /usr/bin/pkg-config --cflags MagickCore
+      /usr/local/bin/pkg-config --cflags MagickCore
       ;;
     --cppflags)
-      /usr/bin/pkg-config --cflags MagickCore
+      /usr/local/bin/pkg-config --cflags MagickCore
       ;;
     --ldflags)
-      /usr/bin/pkg-config --libs MagickCore
+      /usr/local/bin/pkg-config --libs MagickCore
       ;;
     --libs)
-      /usr/bin/pkg-config --libs MagickCore
+      /usr/local/bin/pkg-config --libs MagickCore
       ;;
     --coder-path)
-      echo "/home/fab2/Dev/dvda-author/local/lib/ImageMagick-7.0.8/modules-Q16HDRI/coders"
+      echo "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/lib/ImageMagick-7.0.8/modules-Q16HDRI/coders"
       ;;
     --filter-path)
-      echo "/home/fab2/Dev/dvda-author/local/lib/ImageMagick-7.0.8/modules-Q16HDRI/filters"
+      echo "/usr/home/fab/dvda-author/ImageMagick-7.0.8-49/../local0/lib/ImageMagick-7.0.8/modules-Q16HDRI/filters"
       ;;
     *)
       echo "${usage}" 1>&2

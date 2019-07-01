@@ -1,3 +1,4 @@
+#!/usr/local//bin/bash
 #INSTALL should be saved as is replaced by --force (an odd  feature of autoreconf)
 # for nested packages, autoreconf still creates issues with m4 alignment
 # so autoreconf in each package with --no-recursive when there are nested ones.
