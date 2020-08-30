@@ -364,47 +364,130 @@ static int check_sample_fmt(const AVCodec *codec, enum AVSampleFormat sample_fmt
     return 0;
 }
 
-/* just pick the highest supported samplerate */
-static int select_sample_rate(const AVCodec *codec)
+#if 0
+
+
+#define AV_CH_FRONT_LEFT             0x00000001
+#define AV_CH_FRONT_RIGHT            0x00000002
+#define AV_CH_FRONT_CENTER           0x00000004
+#define AV_CH_LOW_FREQUENCY          0x00000008
+#define AV_CH_BACK_LEFT              0x00000010
+#define AV_CH_BACK_RIGHT             0x00000020
+#define AV_CH_FRONT_LEFT_OF_CENTER   0x00000040
+#define AV_CH_FRONT_RIGHT_OF_CENTER  0x00000080
+#define AV_CH_BACK_CENTER            0x00000100
+#define AV_CH_SIDE_LEFT              0x00000200
+#define AV_CH_SIDE_RIGHT             0x00000400
+#define AV_CH_TOP_CENTER             0x00000800
+#define AV_CH_TOP_FRONT_LEFT         0x00001000
+#define AV_CH_TOP_FRONT_CENTER       0x00002000
+#define AV_CH_TOP_FRONT_RIGHT        0x00004000
+#define AV_CH_TOP_BACK_LEFT          0x00008000
+#define AV_CH_TOP_BACK_CENTER        0x00010000
+#define AV_CH_TOP_BACK_RIGHT         0x00020000
+#define AV_CH_STEREO_LEFT            0x20000000  ///< Stereo downmix.
+#define AV_CH_STEREO_RIGHT           0x40000000  ///< See AV_CH_STEREO_LEFT.
+#define AV_CH_WIDE_LEFT              0x0000000080000000ULL
+#define AV_CH_WIDE_RIGHT             0x0000000100000000ULL
+#define AV_CH_SURROUND_DIRECT_LEFT   0x0000000200000000ULL
+#define AV_CH_SURROUND_DIRECT_RIGHT  0x0000000400000000ULL
+#define AV_CH_LOW_FREQUENCY_2        0x0000000800000000ULL
+#define AV_CH_TOP_SIDE_LEFT          0x0000001000000000ULL
+#define AV_CH_TOP_SIDE_RIGHT         0x0000002000000000ULL
+#define AV_CH_BOTTOM_FRONT_CENTER    0x0000004000000000ULL
+#define AV_CH_BOTTOM_FRONT_LEFT      0x0000008000000000ULL
+#define AV_CH_BOTTOM_FRONT_RIGHT     0x0000010000000000ULL
+#define AV_CH_LAYOUT_MONO              (AV_CH_FRONT_CENTER)
+#define AV_CH_LAYOUT_STEREO            (AV_CH_FRONT_LEFT|AV_CH_FRONT_RIGHT)
+#define AV_CH_LAYOUT_2POINT1           (AV_CH_LAYOUT_STEREO|AV_CH_LOW_FREQUENCY)
+#define AV_CH_LAYOUT_2_1               (AV_CH_LAYOUT_STEREO|AV_CH_BACK_CENTER)
+#define AV_CH_LAYOUT_SURROUND          (AV_CH_LAYOUT_STEREO|AV_CH_FRONT_CENTER)
+#define AV_CH_LAYOUT_3POINT1           (AV_CH_LAYOUT_SURROUND|AV_CH_LOW_FREQUENCY)
+#define AV_CH_LAYOUT_4POINT0           (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_CENTER)
+#define AV_CH_LAYOUT_4POINT1           (AV_CH_LAYOUT_4POINT0|AV_CH_LOW_FREQUENCY)
+#define AV_CH_LAYOUT_2_2               (AV_CH_LAYOUT_STEREO|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT)
+#define AV_CH_LAYOUT_QUAD              (AV_CH_LAYOUT_STEREO|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT)
+#define AV_CH_LAYOUT_5POINT0           (AV_CH_LAYOUT_SURROUND|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT)
+#define AV_CH_LAYOUT_5POINT1           (AV_CH_LAYOUT_5POINT0|AV_CH_LOW_FREQUENCY)
+#define AV_CH_LAYOUT_5POINT0_BACK      (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT)
+#define AV_CH_LAYOUT_5POINT1_BACK      (AV_CH_LAYOUT_5POINT0_BACK|AV_CH_LOW_FREQUENCY)
+
+
+for MLP these are the layouts allowed by mlp.c:58
+
+    AV_CH_LAYOUT_MONO            0x00000004  SPEAKER_FRONT_CENTER
+    AV_CH_LAYOUT_STEREO          0x00000003  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT
+    AV_CH_LAYOUT_2_1             0x00000103  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_CENTER
+    AV_CH_LAYOUT_QUAD            0x00000033  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT
+    AV_CH_LAYOUT_2POINT1         0x0000000B  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_LOW_FREQUENCY
+    AV_CH_LAYOUT_SURROUND        0x00000007  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER
+    AV_CH_LAYOUT_4POINT0         0x00000107  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_CENTER
+    AV_CH_LAYOUT_5POINT0_BACK    0x00000037  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT
+    AV_CH_LAYOUT_3POINT1         0x0000000F  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY
+    AV_CH_LAYOUT_4POINT1         0x0000010F  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_CENTER | SPEAKER_LOW_FREQUENCY
+    AV_CH_LAYOUT_5POINT1_BACK    0x0000003F  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT | SPEAKER_LOW_FREQUENCY
+
+which can be rewrittent without deps fo ffmpeg and keeping to MS defines as follows:
+
+# define SPEAKER_FRONT_LEFT             0x1
+# define SPEAKER_FRONT_RIGHT            0x2
+# define SPEAKER_FRONT_CENTER           0x4
+# define SPEAKER_LOW_FREQUENCY          0x8
+# define SPEAKER_BACK_LEFT              0x10
+# define SPEAKER_BACK_RIGHT             0x20
+# define SPEAKER_FRONT_LEFT_OF_CENTER   0x40
+# define SPEAKER_FRONT_RIGHT_OF_CENTER  0x80
+# define SPEAKER_BACK_CENTER            0x100
+# define SPEAKER_SIDE_LEFT              0x200
+# define SPEAKER_SIDE_RIGHT             0x400
+# define SPEAKER_TOP_CENTER             0x800
+# define SPEAKER_TOP_FRONT_LEFT         0x1000
+# define SPEAKER_TOP_FRONT_CENTER       0x2000
+# define SPEAKER_TOP_FRONT_RIGHT        0x4000
+# define SPEAKER_TOP_BACK_LEFT          0x8000
+# define SPEAKER_TOP_BACK_CENTER        0x10000
+# define SPEAKER_TOP_BACK_RIGHT         0x20000
+# define SPEAKER_RESERVED               0x80000000
+
+#endif // 0
+
+static int  channels2layout[6] = { SPEAKER_FRONT_CENTER,
+                                   SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT,
+                                   SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_CENTER,
+                                   SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT,
+                                   SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT,
+                                   SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT | SPEAKER_LOW_FREQUENCY
+                                 };
+
+inline static int select_channel_layout(fileinfo_t* info, globalData* globals)
 {
-    const int *p;
-    int best_samplerate = 0;
-
-    if (!codec->supported_samplerates)
-        return 44100;
-
-    p = codec->supported_samplerates;
-    while (*p) {
-        if (!best_samplerate || abs(44100 - *p) < abs(44100 - best_samplerate))
-            best_samplerate = *p;
-        p++;
+    switch(info->dw_channel_mask)
+    {
+         // do nothing
+         case  SPEAKER_FRONT_CENTER:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_CENTER:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_LOW_FREQUENCY:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_CENTER:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_CENTER | SPEAKER_LOW_FREQUENCY:
+         case  SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT | SPEAKER_LOW_FREQUENCY:
+               return (info->dw_channel_mask);
+         default:
+               if (info->channels > 0)
+                  return channels2layout[info->channels - 1];  // reassign
+               else
+               {
+                  foutput(ERR "File %s has neither channels or channel layout.", info->filename);
+                  EXITING
+               }
     }
-    return best_samplerate;
+
+  return 0;
 }
-
-/* select layout with the highest channel count */
-static int select_channel_layout(const AVCodec *codec)
-{
-    const uint64_t *p;
-    uint64_t best_ch_layout = 0;
-    int best_nb_channels   = 0;
-
-    if (!codec->channel_layouts)
-        return AV_CH_LAYOUT_STEREO;
-
-    p = codec->channel_layouts;
-    while (*p) {
-        int nb_channels = av_get_channel_layout_nb_channels(*p);
-
-        if (nb_channels > best_nb_channels) {
-            best_ch_layout    = *p;
-            best_nb_channels = nb_channels;
-        }
-        p++;
-    }
-    return best_ch_layout;
-}
-
 
 static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt, FILE *output, globalData* globals)
 {
@@ -414,7 +497,7 @@ static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt, FILE *out
     ret = avcodec_send_frame(ctx, frame);
     if (ret < 0)
     {
-        clean_exit(ERR "Error sending the frame to the encoder\n", globals);
+        EXIT_ON_RUNTIME_ERROR_VERBOSE("Error sending the frame to the encoder\n");
     }
 
     /* read all the available output packets (in general there may be any
@@ -427,7 +510,7 @@ static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt, FILE *out
             return;
         else if (ret < 0)
         {
-            clean_exit(ERR "Error encoding audio frame\n", globals);
+            EXIT_ON_RUNTIME_ERROR_VERBOSE("Error encoding audio frame\n");
         }
 
         fwrite(pkt->data, 1, pkt->size, output);
@@ -435,10 +518,79 @@ static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt, FILE *out
     }
 }
 
+
+inline static uint64_t encode_fmt_s32(AVCodecContext* c, AVFrame* frame, AVPacket *pkt, FILE* in_fp, FILE* out_fp, globalData* globals)
+{
+        int load = c->channels * 4 * c->frame_size;
+
+        uint16_t samples[load];
+        memset(samples, 0, load);
+
+        int res = -1, bytes_read_per_sample = -1, bytes_read_per_frame = -1;
+        static uint64_t bytes_read;
+
+        for (int s = 0; res != 0 && s < c->frame_size; ++s)
+        {
+           for (int ch = 0; res != 0 && ch < c->channels; ++ch)
+           {
+
+             res = fread(&samples[(s * c->channels + ch)* 4 + 1], 1, 3, in_fp);
+
+             bytes_read_per_sample += res;
+           }
+
+           bytes_read_per_frame += bytes_read_per_sample;
+
+           if (globals->maxverbose)
+            foutput(MSG_TAG "Bytes read per sample: %d Bytes read per frame: %d\n",
+                                                  bytes_read_per_sample,
+                                                  bytes_read_per_frame);
+        }
+
+        memcpy((uint16_t*) frame->data[0], samples, load);
+
+        if (bytes_read_per_frame > 0)
+        {
+           encode(c, frame, pkt, out_fp, globals);
+           bytes_read += bytes_read_per_frame;
+        }
+
+        return bytes_read;
+}
+
+inline static uint64_t encode_fmt_s16(AVCodecContext* c, AVFrame* frame, AVPacket *pkt, FILE* in_fp, FILE* out_fp, globalData* globals)
+{
+        int load = c->channels * 2 * c->frame_size;
+
+        uint16_t * samples = (uint16_t*) frame->data[0];
+        static uint64_t bytes_read;
+        uint16_t bytes_read_per_frame;
+
+        bytes_read_per_frame = fread(samples, 1, load, in_fp);
+
+        if (bytes_read_per_frame)
+        {
+            encode(c, frame, pkt, out_fp, globals);
+
+           if (globals->maxverbose)
+            foutput(MSG_TAG "Bytes read per frame: %d\n", bytes_read_per_frame);
+        }
+
+        bytes_read += bytes_read_per_frame;
+
+        return bytes_read;
+}
+
 int encode_mlp_file(fileinfo_t* info, globalData* globals)
 {
     // initialize all muxers, demuxers and protocols for libavformat
     // (does nothing if called twice during the course of one program execution)
+
+    if (info->bitspersample == 24)
+    {
+        foutput(WAR "Currently 24-bit MLP support is still under development. Balking at concerting file %s\n", info->filename);
+        return 0;
+    }
 
     if (globals->debugging)
         foutput(INF "Encoding %s to MLP\n", info->filename);
@@ -478,64 +630,14 @@ int encode_mlp_file(fileinfo_t* info, globalData* globals)
         EXITING
     }
 
-    #if 0
-voir ces constantes de libavutil/channel_layout.h et déduire le channel layout c->channel_layout MLP du CGA WAV.
-Ce sont les mêmes que els définitions wav Microsoft...
-
-#define AV_CH_FRONT_LEFT             0x00000001
-#define AV_CH_FRONT_RIGHT            0x00000002
-#define AV_CH_FRONT_CENTER           0x00000004
-#define AV_CH_LOW_FREQUENCY          0x00000008
-#define AV_CH_BACK_LEFT              0x00000010
-#define AV_CH_BACK_RIGHT             0x00000020
-#define AV_CH_FRONT_LEFT_OF_CENTER   0x00000040
-#define AV_CH_FRONT_RIGHT_OF_CENTER  0x00000080
-#define AV_CH_BACK_CENTER            0x00000100
-#define AV_CH_SIDE_LEFT              0x00000200
-#define AV_CH_SIDE_RIGHT             0x00000400
-#define AV_CH_TOP_CENTER             0x00000800
-#define AV_CH_TOP_FRONT_LEFT         0x00001000
-#define AV_CH_TOP_FRONT_CENTER       0x00002000
-#define AV_CH_TOP_FRONT_RIGHT        0x00004000
-#define AV_CH_TOP_BACK_LEFT          0x00008000
-#define AV_CH_TOP_BACK_CENTER        0x00010000
-#define AV_CH_TOP_BACK_RIGHT         0x00020000
-#define AV_CH_STEREO_LEFT            0x20000000  ///< Stereo downmix.
-#define AV_CH_STEREO_RIGHT           0x40000000  ///< See AV_CH_STEREO_LEFT.
-#define AV_CH_WIDE_LEFT              0x0000000080000000ULL
-#define AV_CH_WIDE_RIGHT             0x0000000100000000ULL
-#define AV_CH_SURROUND_DIRECT_LEFT   0x0000000200000000ULL
-#define AV_CH_SURROUND_DIRECT_RIGHT  0x0000000400000000ULL
-#define AV_CH_LOW_FREQUENCY_2        0x0000000800000000ULL
-#define AV_CH_TOP_SIDE_LEFT          0x0000001000000000ULL
-#define AV_CH_TOP_SIDE_RIGHT         0x0000002000000000ULL
-#define AV_CH_BOTTOM_FRONT_CENTER    0x0000004000000000ULL
-#define AV_CH_BOTTOM_FRONT_LEFT      0x0000008000000000ULL
-#define AV_CH_BOTTOM_FRONT_RIGHT     0x0000010000000000ULL
-
-    #endif // 0
-
-
     c->sample_rate    = info->samplerate;
-
-    if (info->dw_channel_mask)
-       c->channel_layout = info->dw_channel_mask;
-    else
-    {
-        if (info->channels == 1)
-           c->channel_layout = AV_CH_LAYOUT_MONO;
-        else
-        if (info->channels == 2)
-           c->channel_layout = AV_CH_LAYOUT_STEREO;
-        else
-           c->channel_layout = cga2wav_channels[default_cga[info->channels - 1]];
-    }
-
+    c->channel_layout = select_channel_layout(info, globals);
     c->channels       = info->channels;
+    c->bits_per_coded_sample = info->bitspersample;
 
     /* open it */
 
-    c->strict_std_compliance = -2; // allow experimental codecs
+    c->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL; // allow experimental codecs
 
     if (avcodec_open2(c, codec, NULL) < 0)
     {
@@ -566,14 +668,16 @@ Ce sont les mêmes que els définitions wav Microsoft...
         EXITING
     }
 
-    /* packet for holding encoded output */
+    // packet for holding encoded output
+
     pkt = av_packet_alloc();
     if (!pkt) {
         fprintf(stderr, "could not allocate the packet\n");
         exit(1);
     }
 
-    /* frame containing input raw audio */
+    // frame containing input raw audio
+
     frame = av_frame_alloc();
     if (!frame) {
         fprintf(stderr, "Could not allocate audio frame\n");
@@ -584,9 +688,7 @@ Ce sont les mêmes que els définitions wav Microsoft...
     frame->format         = c->sample_fmt;
     frame->channel_layout = c->channel_layout;
 
-    /* allocate the data buffers */
-
-    ////   CURRENTLY VANILLA FFMPEG ENCODER NOT AVAILABLE FOR 24-BIT AUDIO  ///
+    // allocate the data buffers
 
     int res = av_frame_get_buffer(frame, 0);
     if (res < 0) {
@@ -594,32 +696,30 @@ Ce sont les mêmes que els définitions wav Microsoft...
         exit(2);
     }
 
-    while(true)
+    uint64_t bytes_read;
+
+    while(! feof(in_fp))
     {
-        uint16_t *samples;
         res = av_frame_make_writable(frame);
         if (res < 0)
-            exit(1);
-        samples = (uint16_t*) frame->data[0];
-        int load = info->channels * 2 * c->frame_size;
-
-        res = fread(samples, load, 1, in_fp);
-        if (res)
         {
-           encode(c, frame, pkt, out_fp, globals);
-           bytes_written += load;
+            EXIT_ON_RUNTIME_ERROR_VERBOSE("FFMPEG Frame not writable in encoding loop")
         }
 
-        if (res == 0)
-        {
-            res = fread(frame->data[0], 1, load, in_fp);
-            encode(c, frame, pkt, out_fp, globals);
-            bytes_written += res;
-            break;
-        }
+        if (c->sample_fmt == AV_SAMPLE_FMT_S16)
+
+            bytes_read = encode_fmt_s16(c, frame, pkt, in_fp, out_fp, globals);
+        else
+            bytes_read = encode_fmt_s32(c, frame, pkt, in_fp, out_fp, globals);
     }
 
-    /* flush the encoder */
+    if (bytes_read == info->file_size)
+        if (globals->debugging) foutput(MSG_TAG "File %s was entirely read (%llu B)", info->filename, info->file_size);
+    else
+        foutput(MSG_TAG "File %s was not entirely read (%llu B / %llu B)", info->filename, bytes_read, info->file_size);
+
+    // flush the encoder
+
     encode(c, NULL, pkt, out_fp, globals);
 
     fclose(out_fp);

@@ -151,6 +151,24 @@ int launch_manager(command_t *command, globalData *globals)
 
             if (files[i][j].type != AFMT_MLP)
             {
+                if (globals->encode_to_mlp_dvd)
+                {
+                     if (files[i][j].channels > 2 && files[i][j].samplerate > 96000)
+                     {
+                        foutput("%s %s %s %d %s %d %s %d %s\n",
+                              ANSI_COLOR_RED "[ERR] Surround file ",
+                              files[i][j].filename,
+                              " cannot be recorded to DVD-Audio even with MLP encoding (",
+                              files[i][j].channels,
+                              " channels, ",
+                              files[i][j].bitspersample,
+                              " bits, ",
+                              files[i][j].samplerate,
+                              " samples per second.)");
+                        clean_exit(-1, globals);
+                     }
+                }
+                else
                  if
                 (((files[i][j].samplerate > 48000    && files[i][j].bitspersample == 24)
                   || files[i][j].samplerate > 96000)
